@@ -1,0 +1,17 @@
+# Steps for Angular App
+
+- Start your rails app
+  - .rvmrc/.ruby-version
+  - Fix your DB
+- Download angular (or use a gem? sure)
+  - Put it in vendor/assets/javascripts
+- Download underscore
+  - Put it in vendor/assets/javascripts
+- Remove turbolinks
+  - Remove it from application.html (on javascript tag, and stylesheet tag)
+  - application.js (remove the require)
+  - remove from Gemfile
+  - Or, when creating a rails app rails new . --skip-tubolinks
+
+
+

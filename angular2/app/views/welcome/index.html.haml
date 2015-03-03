@@ -1,0 +1,15 @@
+%h1 Welcome#index
+= link_to 'Quotes', quotes_path
+%div{ 'ng-controller':  'indexCtrl' }
+  {{ some_text.quote }} - {{ some_text.quoteMaster }}
+  %br
+  %button{ 'ng-click': 'changeQuote()' } New Quote, please.
+  %ul
+    %li{ 'ng-repeat': 'quote in quotes.quotes' }
+      {{ quote.quote }} - {{ quote.quote_master }}
+      %button{ 'ng-click': 'deleteQuote(quote.id)' } Dlete
+  %form{'ng-submit': "submitForm()"}
+    %input{type: "text", placeholder: 'Quote', 'ng-model': 'formQuote'}
+    %input{type: "text", placeholder: 'Quote Master', 'ng-model': 'formQuoteMaster'}
+    %input{type: "submit"}
+
