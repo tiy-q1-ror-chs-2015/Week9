@@ -1,0 +1,14 @@
+{{ some_text.quote }} - {{ some_text.quote_master }}
+<br>
+<button ng-click="changeQuote()">New Quote, please.</button>
+
+<a ng-click='gotoNewForm()'>Let's create new quotes!</a>
+
+<ul>
+  <li ng-repeat="quote in quotes.quotes">
+    {{ quote.quote }} - {{ quote.quote_master }}
+    <button ng-click='deleteQuote(quote.id)'>Dlete</button>
+    <button ng-click='editQuote(quote.id)'>Edit</button>
+  </li>
+</ul>
+

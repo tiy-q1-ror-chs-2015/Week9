@@ -3,17 +3,24 @@ addressBook.factory('quoteData', function($http) {
     data: {
       quotes: [
       ]
-    }
+    },
+    isLoaded: false
   }
 
-  quoteData.loadQuotes = function() {
+  quoteData.loadQuotes = function(deferred) {
     // $.ajax.get("/quotes.json")
-    $http.get("/quotes.json").success(function(quotesFromServer) {
-      // console.log(quotesFromServer);        
-      _.each(quotesFromServer, function(quote){
-        quoteData.pushQuote(quote)  
-      })
-    });
+    if(quoteData.isLoaded == false){
+      $http.get("/quotes.json").success(function(quotesFromServer) {
+        console.log(quotesFromServer);
+        quoteData.isLoaded = true;
+        _.each(quotesFromServer, function(quote){
+          quoteData.pushQuote(quote)  
+        })
+        if(deferred) {
+          deferred.resolve()
+        }
+      });
+    }
   }
 
   quoteData.addQuote = function(quote) {
@@ -29,11 +36,15 @@ addressBook.factory('quoteData', function($http) {
   quoteData.deleteQuote = function(quoteId) {
     $http.delete("/quotes/" + quoteId + ".json").success(function(data) {
       console.log("SUccess");
-      var deletedQuote = _.findWhere( quoteData.data.quotes, {id: parseInt(quoteId)})
+      var deletedQuote = quoteData.findQuote(quoteId);
       console.log(quoteData.data.quotes)
       quoteData.data.quotes = _.without(quoteData.data.quotes, deletedQuote)
       console.log(quoteData.data.quotes)
     })
+  }
+
+  quoteData.findQuote = function(quoteId) {
+    return _.findWhere( quoteData.data.quotes, {id: parseInt(quoteId)});
   }
   // quoteData.data.quotes[0].quote
   // quoteData.data.quotes[0].quoteMaster
